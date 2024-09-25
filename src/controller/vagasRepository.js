@@ -66,3 +66,6 @@ endpoints.delete('/vagas/del/:id', async (req, resp) => {
     }
 });
 
+
+
+export default endpoints;
