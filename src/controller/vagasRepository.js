@@ -16,8 +16,11 @@ endpoints.post('/vagas', async (req, resp) => {
         resp.status(200).json({id: id});
 
 
-    } catch (error) {
-        resp.status(500).json({ mensagem: error.message });
+    } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
     }
 });
 
@@ -27,9 +30,11 @@ endpoints.get('/vagas', async (req, resp) => {
        let dados = await consultarTodasVagas();
 
         resp.status(200).json({dados});
-
-    } catch (error) {
-        resp.status(500).json({ mensagem: error.message });
+    } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
     }
 });
    
@@ -43,10 +48,11 @@ endpoints.put('/vagas/:id', async (req, resp) => {
       const linhasAfetadas = await atualizarVagaservice(dados, id);
 
       resp.status(200).json({ linhasAfetadas });
-  
-    } catch (error) {
-      
-      resp.status(500).json({ mensagem: error.message });
+    } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
     }
   });
 
@@ -61,8 +67,11 @@ endpoints.delete('/vagas/del/:id', async (req, resp) => {
         resp.status(200).json();
 
 
-    } catch (error) {
-        resp.status(500).json({ mensagem: error.message });
+    } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
     }
 });
 

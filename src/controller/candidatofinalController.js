@@ -13,10 +13,12 @@ endpoints.post("/candidatofinal", async (req, resp) => {
         const id_li = await inserirCandidatoFinalService(id);
 
         resp.status(200).json({id_li});
-    } catch (error) {
-      
-        resp.status(500).json({ mensagem: error.message });
-      }
+    } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
+    }
 })
 
 endpoints.post("/candidatofinal/:cpf", async (req, resp) => { 
@@ -27,10 +29,12 @@ endpoints.post("/candidatofinal/:cpf", async (req, resp) => {
         const dados = await consultarCandidatoFinalPorcpf(cpf);
 
         resp.status(200).json({dados});
-    } catch (error) {
-      
-        resp.status(500).json({ mensagem: error.message });
-      }
+    } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
+    }
 })
 
 endpoints.post("/candidatofinal/:email", async (req, resp) => { 
@@ -41,10 +45,12 @@ endpoints.post("/candidatofinal/:email", async (req, resp) => {
         const dados = await consultarCandidatoFinalPoremail(email);
 
         resp.status(200).json({dados});
-    } catch (error) {
-      
-        resp.status(500).json({ mensagem: error.message });
-      }
+    } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
+    }
 })
 
 endpoints.put("/candidatofinal/put/:id", async (req, resp) => { 
@@ -56,10 +62,12 @@ endpoints.put("/candidatofinal/put/:id", async (req, resp) => {
 
 
         resp.status(200).json();
-    } catch (error) {
-      
-        resp.status(500).json({ mensagem: error.message });
-      }
+       } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
+    }
 })
 
 
