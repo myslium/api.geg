@@ -1,4 +1,13 @@
-<<<<<<< HEAD
-=======
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
 
->>>>>>> 27e2c98ce2c1b9e3e7685d2dea9e12faec92c105
+const servidor = express();
+
+servidor.use(express.json());
+servidor.use(cors())
+
+
+const PORTA = process.env.PORTA;
+
+servidor.listen(PORTA, () => console.log(`--> API SUBIU NA PORTA ${PORTA}`));
