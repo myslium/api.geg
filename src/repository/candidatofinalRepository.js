@@ -16,17 +16,6 @@ export async function consultarCandidatosFinais() {
 }
 
 
-export async function consultarCandidatoFinalPorcpf(cpf) {
-    const comando = `SELECT * FROM candidato_final WHERE cpf = ?`;
-    const [resultado] = await con.query(comando, [cpf]);
-    return resultado[0];
-}
-
-export async function consultarCandidatoFinalPoremail(email) {
-    const comando = `SELECT * FROM candidato_final WHERE email = ?`;
-    const [resultado] = await con.query(comando, [email]);
-    return resultado[0];
-}
 
 
 export async function atualizarCandidatoFinal(id, final) {

@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import "./utils/global.js"
 import express from 'express';
 import cors from 'cors';
 import Rotas from './rotas.js';

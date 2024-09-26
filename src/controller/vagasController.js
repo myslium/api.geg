@@ -1,5 +1,5 @@
 import { consultarVagaservice, atualizarVagaservice, deletarVagaservice } from "../service/vagasService.js";
-import {consultarTodasVagas} from "../repository/vagasRepository.js";
+import consultarTodasVagas from "../repository/vagasRepository.js";
 
 import { Router } from "express";
 
@@ -62,7 +62,7 @@ endpoints.delete('/vagas/del/:id', async (req, resp) => {
   
         let id = req.params.id;
 
-         await deleteVaga(id);
+         await deletarVagaservice (id);
 
         resp.status(200).json();
 

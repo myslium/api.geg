@@ -10,4 +10,3 @@ export default async function consultarAdminService(usuario, senha) {
     let token = gerarTokenAdmin(loginInfo);
     return token;
 }
-
