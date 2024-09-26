@@ -1,6 +1,5 @@
 import { inserirNota } from "../repository/conteudoRepository.js";
 import { Router } from "express";
-import { logErro } from "../utils/log.js";
 
 const endpoints = Router();
 
@@ -18,8 +17,9 @@ endpoints.post('/inserirNota', async (req, resp) => {
     } 
     
     catch (err) {
-        logErro
-        resp.status(400).send(criarErro(err))
+        resp.status(400).send({
+            erro: err.message
+        })
     }
     
 })
