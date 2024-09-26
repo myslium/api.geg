@@ -62,7 +62,7 @@ endpoints.delete('/vagas/del/:id', async (req, resp) => {
   
         let id = req.params.id;
 
-         await deleteVaga(id);
+         await deletarVagaservice (id);
 
         resp.status(200).json();
 

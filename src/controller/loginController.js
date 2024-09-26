@@ -14,12 +14,10 @@ endpoints.post('/login/adm', async (req,resp) => {
 
         resp.send({token});
     }
-
-    
-catch (err) {
-    logErro(err)
-    resp.status(400).send(criarErro(err))
-}
+    catch (err) { 
+        logErro(err);
+        resp.status(401).send(criarErro(err));
+    }
 })
 
 

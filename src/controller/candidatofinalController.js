@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { inserirCandidatoFinalService, atualizarCandidatoFinalService} from "../service/candidatofinalService.js";
-import { consultarCandidatoFinalPorcpf, consultarCandidatoFinalPoremail } from "../repository/candidatofinalRepository.js";
+import { consultarCandidatosFinais} from "../repository/candidatofinalRepository.js";
 
 
 const endpoints = Router();
@@ -21,12 +21,12 @@ endpoints.post("/candidatofinal", async (req, resp) => {
     }
 })
 
-endpoints.post("/candidatofinal/:cpf", async (req, resp) => { 
+endpoints.get("/candidatofinal", async (req, resp) => { 
 
     try {
 
-        const cpf = req.params.cpf; 
-        const dados = await consultarCandidatoFinalPorcpf(cpf);
+ 
+        const dados = await consultarCandidatosFinais();
 
         resp.status(200).json({dados});
     } 
@@ -37,21 +37,6 @@ endpoints.post("/candidatofinal/:cpf", async (req, resp) => {
     }
 })
 
-endpoints.post("/candidatofinal/:email", async (req, resp) => { 
-
-    try {
-
-        const email = req.params.email; 
-        const dados = await consultarCandidatoFinalPoremail(email);
-
-        resp.status(200).json({dados});
-    } 
-    
-    catch (err) {
-        logErro(err)
-        resp.status(400).send(criarErro(err))
-    }
-})
 
 endpoints.put("/candidatofinal/put/:id", async (req, resp) => { 
 
