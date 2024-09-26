@@ -3,10 +3,15 @@ import validarCandidato from "../validation/candidato.js";
 
 
 export default async function candidatoFormularioService(candidato) {
+    
+        validarCandidato(candidato);
 
-    let verificacao = validarCandidato(candidato);
+        let novoCandidato = await candidatoFormulario(candidato);
 
-    let novoCandidato = candidatoFormulario(verificacao)
+        if (!novoCandidato) {
+            throw new Error('Erro! Não foi possível inserir');
+        }
 
-    return novoCandidato
+        return novoCandidato;
+
 }

@@ -3,7 +3,7 @@
 export default async function validarCandidato(candidato) {
     
     
-    if (candidato.cpf > 11 || isNaN(candidato.cpf)) {
+    if (!candidato.cpf) {
         throw new Error('CPF inválido')
     }
 

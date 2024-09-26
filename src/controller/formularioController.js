@@ -2,7 +2,6 @@
 import candidatoFormularioService from "../service/formularioService.js";
 import { Router } from "express";
 
-import { logErro } from "../utils/log.js";
 
 const endpoints = Router()
 
@@ -20,8 +19,10 @@ endpoints.post('/candidatoNovo', async (req, resp) => {
     } 
     
     catch (err) {
-        logErro(err)
-        resp.status(400).send(criarErro(err))
+        
+        resp.status(400).send({
+            erro: err.message
+        })
     }
     
 })
