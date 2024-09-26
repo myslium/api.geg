@@ -1,20 +1,20 @@
-import candidatoFormulario from "../repository/formularioRepository.js";
+
+import candidatoFormularioService from "../service/formularioService.js";
 import { Router } from "express";
 
 import { logErro } from "../utils/log.js";
-import { error } from "console";
 
 const endpoints = Router()
 
-endpoints.post('/candidato', async (req, resp) => {
+endpoints.post('/candidatoNovo', async (req, resp) => {
 
     try {
         
         let candidato = req.body;
         
-        let resposta = await candidatoFormulario(candidato)
+        let resposta = await candidatoFormularioService(candidato)
 
-        resp.status(400).send({
+        resp.status(200).send({
             novoID: resposta
         })
     } 
@@ -25,3 +25,5 @@ endpoints.post('/candidato', async (req, resp) => {
     }
     
 })
+
+export default endpoints;
