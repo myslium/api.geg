@@ -1,13 +1,14 @@
 import con from './connection.js'
 
-export default async function consultarVagas(vaga) {
+export async function consultarVagas(vaga) {
 
     let comando = `INSERT INTO vagas (nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, salario, beneficios, requisicoes, descricao, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate())`
   
 
 
 
-let [resultado] = await con.query(comando, [ vaga.nome_empresa,
+let [resultado] = await con.query(comando, [
+    vaga.nome_empresa,
     vaga.contato_empresa,
     vaga.cnpj,
     vaga.cargo,
@@ -72,7 +73,7 @@ export async function deletarVaga(id) {
 
 
 
-export async function consultarTodasVagas() {
+export default async function consultarTodasVagas() {
     let comando = `SELECT * FROM vagas`;
 
     let [resultado] = await con.query(comando);
