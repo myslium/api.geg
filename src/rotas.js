@@ -9,12 +9,9 @@ import candidatoConfirmadoController from '../src/controller/candidatoConfirmado
 
 export default function Rotas(servidor){
 
-<<<<<<< HEAD
 
    servidor.use(loginController)
-=======
     servidor.use(loginController)
->>>>>>> 6c71b55833071a38fae0c4bb12b64f300f44848b
     servidor.use(candidatofinalController);
     servidor.use(vagasController);
     servidor.use(formularioController);
