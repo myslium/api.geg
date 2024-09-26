@@ -1,7 +1,11 @@
-import formularioController from './controller/formularioController.js';
-import conteudoController from './controller/conteudoController.js';
+import candidatofinalController from  '../src/controller/candidatofinalController';
+import vagasController from  '../src/controller/vagasController.js'
+import loginController from  '../src/controller/loginController.js'
 
-export default function rotas(servidor) {
-    servidor.use(formularioController)
-    servidor.use(conteudoController)
-}
+export default function Rotas(servidor){
+
+   servidor.use(loginController)
+    servidor.use(candidatofinalController);
+    servidor.use(vagasController);
+
+}       
