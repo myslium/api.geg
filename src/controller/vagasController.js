@@ -1,5 +1,5 @@
 import { consultarVagaservice, atualizarVagaservice, deletarVagaservice } from "../service/vagasService.js";
-import consultarTodasVagas from "../repository/vagasRepository.js";
+import {consultarTodasVagas} from "../repository/vagasRepository.js";
 
 import { Router } from "express";
 

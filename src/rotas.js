@@ -1,4 +1,4 @@
-import candidatofinalController from  '../src/controller/candidatofinalController';
+import candidatofinalController from  '../src/controller/candidatofinalController.js';
 import vagasController from  '../src/controller/vagasController.js'
 import loginController from  '../src/controller/loginController.js'
 

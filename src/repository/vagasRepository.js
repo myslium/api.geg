@@ -1,6 +1,6 @@
 import con from './connection.js'
 
-export default async function consultarVagas(vaga) {
+export async function consultarVagas(vaga) {
 
     let comando = `INSERT INTO vagas (nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, salario, beneficios, requisicoes, descricao, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate())`
   
