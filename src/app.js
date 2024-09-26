@@ -8,7 +8,7 @@ const servidor = express();
 servidor.use(express.json());
 servidor.use(cors())
 
-Rotas(service);
+Rotas(servidor);
 
 const PORTA = process.env.PORTA;
 
