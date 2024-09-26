@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-const KEY = '===Gente&Gestão==='
+const KEY = '===Gestão==='
 
 
 
