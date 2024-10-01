@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { inserirCandidatoFinalService, atualizarCandidatoFinalService} from "../service/candidatofinalService.js";
 import { consultarCandidatosFinais} from "../repository/candidatofinalRepository.js";
+import { autenticacaoAdmin } from "../utils/jwt.js";
 
 
 const endpoints = Router();
@@ -38,7 +39,7 @@ endpoints.get("/candidatofinal", async (req, resp) => {
 })
 
 
-endpoints.put("/candidatofinal/put/:id", async (req, resp) => { 
+endpoints.put("/candidatofinal/put/:id", autenticacaoAdmin, async (req, resp) => { 
 
     try {
         const id = req.params.id;

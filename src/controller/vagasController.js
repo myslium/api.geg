@@ -1,6 +1,6 @@
 import { consultarVagaservice, atualizarVagaservice, deletarVagaservice } from "../service/vagasService.js";
 import consultarTodasVagas from "../repository/vagasRepository.js";
-
+import { autenticacaoAdmin } from "../utils/jwt.js";
 import { Router } from "express";
 
 
@@ -39,7 +39,7 @@ endpoints.get('/vagas', async (req, resp) => {
 });
    
 
-endpoints.put('/vagas/:id', async (req, resp) => {
+endpoints.put('/vagas/:id', autenticacaoAdmin, async (req, resp) => {
     try {
       const dados = req.body;
       const id = req.params.id;
@@ -57,7 +57,7 @@ endpoints.put('/vagas/:id', async (req, resp) => {
   });
 
 
-endpoints.delete('/vagas/del/:id', async (req, resp) => {
+endpoints.delete('/vagas/del/:id', autenticacaoAdmin, async (req, resp) => {
     try {
   
         let id = req.params.id;
