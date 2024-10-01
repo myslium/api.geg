@@ -13,7 +13,7 @@ endpoints.post('/vagas', async (req, resp) => {
         let dados = req.body;
         let id = await consultarVagaservice(dados);
 
-        resp.status(200).json({id: id});
+        resp.status(200).send({id: id});
 
 
     } 
@@ -29,7 +29,7 @@ endpoints.get('/vagas', async (req, resp) => {
       
        let dados = await consultarTodasVagas();
 
-        resp.status(200).json({dados});
+        resp.status(200).send(dados);
     } 
     
     catch (err) {
@@ -47,7 +47,7 @@ endpoints.put('/vagas/:id', async (req, resp) => {
  
       const linhasAfetadas = await atualizarVagaservice(dados, id);
 
-      resp.status(200).json({ linhasAfetadas });
+      resp.status(200).send(linhasAfetadas);
     } 
     
     catch (err) {
@@ -64,7 +64,7 @@ endpoints.delete('/vagas/del/:id', async (req, resp) => {
 
          await deletarVagaservice (id);
 
-        resp.status(200).json();
+        resp.status(200).send();
 
 
     } 
