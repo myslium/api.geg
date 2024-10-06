@@ -61,14 +61,16 @@ export async function atualizarVaga(vaga, id ) {
 export async function deletarVaga(id) {
     let comando = `DELETE FROM vagas WHERE id = ?`;
 
-    let [resultado] = await con.query(comando, [id]);
+    let resultado = await con.query(comando, [id]);
 
-    return resultado.affectedRows; }
+    let info = resultado[0]
+
+    return info.affectedRows; }
 
 
 
 
-export default async function consultarTodasVagas() {
+export async function consultarTodasVagas() {
     let comando = `SELECT * FROM vagas`;
 
     let [resultado] = await con.query(comando);
@@ -76,3 +78,14 @@ export default async function consultarTodasVagas() {
     return resultado; 
 }
 
+export async function consultarId(id) {
+
+    const comando = `SELECT * FROM vagas
+    WHERE id = ?
+    `
+
+    let [resultado] = await con.query(comando, [id]);
+    let info = resultado[0];
+
+    return info
+}

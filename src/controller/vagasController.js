@@ -1,5 +1,5 @@
 import { consultarVagaservice, atualizarVagaservice, deletarVagaservice } from "../service/vagasService.js";
-import consultarTodasVagas from "../repository/vagasRepository.js";
+import {consultarTodasVagas, consultarId} from "../repository/vagasRepository.js";
 import { autenticacaoAdmin } from "../utils/jwt.js";
 import { Router } from "express";
 
@@ -37,17 +37,33 @@ endpoints.get('/vagas', async (req, resp) => {
         resp.status(400).send(criarErro(err))
     }
 });
+
+endpoints.get('/vagas/:id', async (req, resp) => {
+
+    try {
+        let id = req.params.id
+
+        let resposta = await consultarId(id)
+
+        resp.status(200).send(resposta)
+        
+    } catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
+    }
+    
+})
    
 
-endpoints.put('/vagas/:id', autenticacaoAdmin, async (req, resp) => {
+endpoints.put('/vagas/:id', async (req, resp) => {
     try {
       const dados = req.body;
       const id = req.params.id;
   
  
-      const linhasAfetadas = await atualizarVagaservice(dados, id);
+      await atualizarVagaservice(dados, id);
 
-      resp.status(200).send(linhasAfetadas);
+      resp.status(200).send();
     } 
     
     catch (err) {
@@ -57,12 +73,12 @@ endpoints.put('/vagas/:id', autenticacaoAdmin, async (req, resp) => {
   });
 
 
-endpoints.delete('/vagas/del/:id', autenticacaoAdmin, async (req, resp) => {
+endpoints.delete('/vagas/del/:id',  async (req, resp) => {
     try {
   
         let id = req.params.id;
 
-         await deletarVagaservice (id);
+        await deletarVagaservice(id);
 
         resp.status(200).send();
 
