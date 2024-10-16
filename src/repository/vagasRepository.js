@@ -2,7 +2,8 @@ import con from './connection.js'
 
 export async function consultarVagas(vaga) {
 
-    let comando = `INSERT INTO vagas (nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, salario, beneficios, requisicoes, descricao, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate())`;
+    let comando = `INSERT INTO vagas (nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, salario, beneficios, requisicoes, descricao, data_criacao   data_vencimento,
+        qtd_vagas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate(), ? , ?)`;
 
     let [resultado] = await con.query(comando, [
         vaga.nome_empresa,
@@ -15,7 +16,9 @@ export async function consultarVagas(vaga) {
         vaga.salario,
         vaga.beneficios,
         vaga.requisicoes,
-        vaga.descricao
+        vaga.descricao,
+        vaga.vencimento,
+        vaga.quantidade
     ]);
 
     let into = resultado.insertId;
@@ -36,7 +39,9 @@ export async function atualizarVaga(vaga, id ) {
         salario = ?, 
         beneficios = ?, 
         requisicoes = ?, 
-        descricao = ? 
+        descricao = ?,
+        data_vencimento = ?,
+        qtd_vagas = ?
     WHERE id = ?`;
 
     let [resultado] = await con.query(comando, [
@@ -51,6 +56,8 @@ export async function atualizarVaga(vaga, id ) {
         vaga.beneficios,
         vaga.requisicoes,
         vaga.descricao,
+        vaga.vencimento,
+        vaga.quantidade,
         id
     ]);
 
@@ -85,6 +92,18 @@ export async function consultarId(id) {
     `
 
     let [resultado] = await con.query(comando, [id]);
+    let info = resultado[0];
+
+    return info
+}
+
+export async function consultardesc() {
+
+    const comando = `SELECT  descricao FROM vagas
+
+    `
+
+    let [resultado] = await con.query(comando);
     let info = resultado[0];
 
     return info

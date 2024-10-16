@@ -1,6 +1,6 @@
-import { consultarVagaservice, atualizarVagaservice, deletarVagaservice } from "../service/vagasService.js";
-import {consultarTodasVagas, consultarId} from "../repository/vagasRepository.js";
-import { autenticacaoAdmin } from "../utils/jwt.js";
+import { consultarVagaservice, atualizarVagaservice, deletarVagaservice} from "../service/vagasService.js";
+import {consultarTodasVagas, consultarId, consultardesc} from "../repository/vagasRepository.js";
+
 import { Router } from "express";
 
 
@@ -71,6 +71,20 @@ endpoints.put('/vagas/:id', async (req, resp) => {
         resp.status(400).send(criarErro(err))
     }
   });
+
+  endpoints.get('/vagas', async (req, resp) => {
+    try {
+      
+       let dados = await consultardesc();
+
+        resp.status(200).send(dados);
+    } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
+    }
+});
 
 
 endpoints.delete('/vagas/del/:id',  async (req, resp) => {
