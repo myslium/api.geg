@@ -1,23 +1,25 @@
 import { Router } from "express";
-
-import consultarAdminService from "../service/loginService.js";
-
+import consultarAdmin from "../repository/loginRepository.js";
+import { gerarTokenAdmin } from "../utils/jwt.js";
 const endpoints = Router();
-
 
 endpoints.post('/login/adm', async (req, resp) => {
     try {
-        let usuario = req.body.usuario;
-        let senha = req.body.senha; 
+        const { usuario, senha } = req.body; 
 
-        let token = await consultarAdminService(usuario, senha);
+        const usuarioValido = await consultarAdmin(usuario, senha); 
 
+        if (!usuarioValido) {
+            return resp.status(400).send({ erro: "Usuário ou senha incorreto(s)" });
+        }
+
+        const token = gerarTokenAdmin(usuarioValido); // Geração do token
         resp.send({ token });
+        
     } catch (err) { 
-        console.error('Login error:', err); 
-        resp.status(401).send({ message: 'Credenciais inválidas.' }); 
+        console.error('Erro no login:', err); 
+        resp.status(500).send({ message: 'Erro ao processar a solicitação.' }); 
     }
 });
-
 
 export default endpoints;

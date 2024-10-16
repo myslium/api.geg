@@ -5,7 +5,7 @@ export default async function consultarAdmin(usuario, senha) {
           SELECT DS_USUARIO   usuario,
                  DS_SENHA     senha
             FROM TB_ADMIN
-           WHERE DS_USUARIO = ?
+           WHERE DS_USUARIO = ? 
              AND DS_SENHA   = ?;
     `
 
