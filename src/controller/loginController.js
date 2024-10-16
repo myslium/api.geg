@@ -13,7 +13,7 @@ endpoints.post('/login/adm', async (req, resp) => {
             return resp.status(400).send({ erro: "Usuário ou senha incorreto(s)" });
         }
 
-        const token = gerarTokenAdmin(usuarioValido); // Geração do token
+        const token = gerarTokenAdmin(usuarioValido); 
         resp.send({ token });
         
     } catch (err) { 
