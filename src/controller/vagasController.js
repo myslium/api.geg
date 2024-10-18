@@ -38,19 +38,7 @@ endpoints.get('/vagas', async (req, resp) => {
     }
 });
 
-endpoints.get('/vagas1', async (req, resp) => {
-    try {
-      
-       let dados = await consultarVagasResumo();
 
-        resp.status(200).send(dados);
-    } 
-    
-    catch (err) {
-        logErro(err)
-        resp.status(400).send(criarErro(err))
-    }
-});
 
 endpoints.get('/vagas/:id', async (req, resp) => {
 
