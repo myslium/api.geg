@@ -2,7 +2,7 @@ import con from './connection.js'
 
 export async function consultarVagas(vaga) {
 
-    let comando = `INSERT INTO vagas (nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, salario, beneficios, requisicoes, descricao, data_criacao   data_vencimento,
+    let comando = `INSERT INTO vagas (nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, salario, beneficios, requisicoes, descricao, data_criacao, data_vencimento,
         qtd_vagas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate(), ? , ?)`;
 
     let [resultado] = await con.query(comando, [
