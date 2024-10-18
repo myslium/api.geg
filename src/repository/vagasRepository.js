@@ -108,11 +108,3 @@ export async function consultardesc() {
 
     return info
 }
-
-export async function consultarVagasResumo() {
-    const comando = `SELECT nome_empresa, cargo, data_criacao FROM vagas`;
-
-    let [resultado] = await con.query(comando);
-    
-    return resultado; 
-}
