@@ -15,3 +15,13 @@ export async function inserirNota(nota) {
     return info.insertId;
     
 }
+
+export async function consultarNota() {
+    
+    const comando = `
+        select*from conteudos
+    `
+    let resposta = await con.query(comando)
+    let info = resposta[0]
+    return info
+}
