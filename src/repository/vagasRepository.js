@@ -86,16 +86,19 @@ export async function consultarTodasVagas() {
 }
 
 export async function consultarId(id) {
-
-    const comando = `SELECT * FROM vagas
-    WHERE id = ?
-    `
+    const comando = `
+        SELECT id, nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, 
+               salario, beneficios, requisicoes, descricao, data_vencimento, qtd_vagas 
+        FROM vagas
+        WHERE id = ?
+    `;
 
     let [resultado] = await con.query(comando, [id]);
     let info = resultado[0];
 
-    return info
+    return info;
 }
+
 
 export async function consultardesc() {
 
