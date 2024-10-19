@@ -85,6 +85,16 @@ export async function consultarTodasVagas() {
     return resultado; 
 }
 
+
+export async function consultarTodasdesc() {
+    let comando = `SELECT * FROM vagas
+WHERE descricao IS NOT NULL;`;
+
+    let [resultado] = await con.query(comando);
+    
+    return resultado; 
+}
+
 export async function consultarId(id) {
     const comando = `
         SELECT id, nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, 
