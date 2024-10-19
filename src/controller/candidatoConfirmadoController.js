@@ -1,5 +1,5 @@
 import  {candidatosConfirmados} from "../repository/candidatoConfirmadoRepository.js";
-import consultarCandidatoPorCpf from "../repository/candidatoConfirmadoRepository.js";
+import consultarCandidatoPorCpf from "../repository/candidatoConfirmadoRepository.js"
 import confirmacaoService from "../service/candidatoConfirmado.js";
 
 
