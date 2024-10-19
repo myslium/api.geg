@@ -15,20 +15,18 @@ export async function candidatosConfirmados(confirmado) {
     
 }
 
-export default async function consultarCandidatoConfirmado(id) {
-
+export default async function consultarCandidatoPorCpf(cpf) {
     const comando = `
     SELECT 
-        f.id,
-        f.cpf,
-        f.email
+      *
     FROM candidato_confirmado c
     JOIN formularios f ON f.id = c.id_formulario
-    WHERE f.id = ?
+    WHERE f.cpf = ?
+    `;
 
-    `
-    let [resultado] = await con.query(comando, [id])
-    let info = resultado
-    return info
-    
+    let [resultado] = await con.query(comando, [cpf]);
+    let info = resultado;
+    return info;
 }
+
+

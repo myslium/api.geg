@@ -1,5 +1,7 @@
-import consultarCandidatoConfirmado, { candidatosConfirmados } from "../repository/candidatoConfirmadoRepository.js";
+import  {candidatosConfirmados} from "../repository/candidatoConfirmadoRepository.js";
+import consultarCandidatoPorCpf from "../repository/candidatoConfirmadoRepository.js";
 import confirmacaoService from "../service/candidatoConfirmado.js";
+
 
 import { Router } from "express";
 
@@ -23,13 +25,17 @@ endpoints.post('/confirmarCandidato', async (req, resp) => {
     }
 })
 
-endpoints.get('/confirmarCandidato/:id', async (req, resp) => {
+
+
+endpoints.get('/conferirCandidato/:cpf', async (req, resp) => {
 
     try {
-        let id = req.params.id 
-        let resposta = await consultarCandidatoConfirmado(id)
+        let cpf = req.params.cpf
+
+        let resposta = await consultarCandidatoPorCpf(cpf)
 
         resp.status(200).send(resposta)
+        
     } catch (err) {
         logErro(err)
         resp.status(400).send(criarErro(err))
