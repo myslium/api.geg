@@ -23,11 +23,11 @@ export async function atualizarCandidatoFinal(id, final) {
 
 export async function consultarmes() {
     const comando = `
-      SELECT MONTH(data_inscricao) as mes, COUNT(*) as quantidade 
+      SELECT MONTH(data_postagem) as mes, COUNT(*) as quantidade 
       FROM candidato_final
       GROUP BY mes
     `;
-  
+
     let [resultado] = await con.query(comando); 
     return resultado; 
 }
