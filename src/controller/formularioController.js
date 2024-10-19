@@ -2,6 +2,7 @@
 import consultarCandidatos from "../repository/formularioRepository.js";
 import candidatoFormularioService from "../service/formularioService.js";
 import { Router } from "express";
+import { consultarmes } from "../repository/formularioRepository.js";
 
 
 const endpoints = Router()
@@ -39,5 +40,18 @@ endpoints.get('/candidatoNovo', async (req, resp) => {
     
 })
 
+endpoints.get('/formulario/s', async (req, resp) => {
+    try {
+      
+       let dados = await consultarmes();
+
+        resp.status(200).send(dados);
+    } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
+    }
+});
 
 export default endpoints;

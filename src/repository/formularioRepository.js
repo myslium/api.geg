@@ -15,12 +15,14 @@ export  async function candidatoFormulario(candidato) {
     return info.insertId;
 }
 
-export default async function consultarCandidatos() {
-    
+export async function consultarmes() {
     const comando = `
-    select*from formularios 
-    `
-    let [resposta] = await con.query(comando)
-    return resposta
-}
-
+      SELECT MONTH(data_inscricao) as mes, COUNT(*) as quantidade 
+      FROM formularios
+      GROUP BY mes
+    `;
+  
+    let [resultado] = await con.query(comando); 
+    return resultado; 
+  }
+  
