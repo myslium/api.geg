@@ -1,4 +1,4 @@
-import consultarCandidatoConfirmado from "../repository/candidatoConfirmadoRepository.js";
+import consultarCandidatoConfirmado, { candidatosConfirmados } from "../repository/candidatoConfirmadoRepository.js";
 import confirmacaoService from "../service/candidatoConfirmado.js";
 
 import { Router } from "express";
@@ -10,7 +10,7 @@ endpoints.post('/confirmarCandidato', async (req, resp) => {
     try {
             let confirmado = req.body;
             
-            let resposta = await confirmacaoService(confirmado);
+            let resposta = await candidatosConfirmados(confirmado);
 
             resp.status(200).send({
                 novoID: resposta
@@ -36,5 +36,7 @@ endpoints.get('/confirmarCandidato/:id', async (req, resp) => {
     }
     
 })
+
+
 
 export default endpoints;

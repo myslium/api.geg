@@ -1,8 +1,7 @@
 
-import consultarCandidatos from "../repository/formularioRepository.js";
 import candidatoFormularioService from "../service/formularioService.js";
 import { Router } from "express";
-import { consultarmes } from "../repository/formularioRepository.js";
+import {consultarCandidatos, consultarCandidatosPorID,  consultarmes } from "../repository/formularioRepository.js";
 
 
 const endpoints = Router()
@@ -39,6 +38,22 @@ endpoints.get('/candidatoNovo', async (req, resp) => {
     }
     
 })
+
+endpoints.get('/candidato/:id', async (req, resp) => {
+
+    try {
+        let id = req.params.id
+        let dado = await consultarCandidatosPorID(id)
+
+        resp.status(200).send(dado)
+
+    } catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
+    }
+    
+})
+
 
 endpoints.get('/formulario/s', async (req, resp) => {
     try {

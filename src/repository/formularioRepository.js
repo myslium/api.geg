@@ -26,9 +26,22 @@ export async function consultarmes() {
     return resultado; 
 }
 
-export default async function consultarCandidatos() {
+
+export async function consultarCandidatos() {
   const comando = `select*from formularios`
   let [resultado] = await con.query(comando)
   return resultado
+}
+
+
+export async function consultarCandidatosPorID(id) {
+  const comando = `
+  select*from formularios
+  where id = ?`
+
+  let [resultado] = await con.query(comando, [id])
+  let info = resultado[0]
+  return info
+ 
 }
   
