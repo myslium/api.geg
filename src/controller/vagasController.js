@@ -1,7 +1,5 @@
 import { consultarVagaservice, atualizarVagaservice, deletarVagaservice} from "../service/vagasService.js";
-import {consultarTodasVagas, consultarId, consultardesc, consultarmes, adicionandoCandidato} from "../repository/vagasRepository.js";
 import {consultarTodasVagas, consultarId} from "../repository/vagasRepository.js";
-
 import { Router } from "express";
 
 
@@ -96,22 +94,6 @@ endpoints.delete('/vagas/del/:id',  async (req, resp) => {
         resp.status(400).send(criarErro(err))
     }
 });
-
-endpoints.put('/vagas/candidato/:id/:id', async (req, resp) => {
-    
-    try {
-    
-        let idCandidato = req.params.id
-        let id = req.params.id
-
-        await adicionandoCandidato(idCandidato, id)
-
-        resp.status(200).send()
-    } catch (err) {
-        logErro(err)
-        resp.status(400).send(criarErro(err))
-    }
-})
 
 
 

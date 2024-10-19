@@ -1,4 +1,4 @@
-import candidatoFormulario from "../repository/formularioRepository.js";
+import {candidatoFormulario} from "../repository/formularioRepository.js";
 import validarCandidato from "../validation/candidato.js";
 
 

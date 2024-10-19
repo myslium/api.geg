@@ -1,7 +1,7 @@
 import con from "./connection.js";
 
 
-export  async function candidatoFormulario(candidato) {
+export async function candidatoFormulario(candidato) {
     const comando = `
         INSERT INTO formularios (cpf, cargo, email, curriculo, data_inscricao)
         VALUES (?, ?, ?, sysdate(), id_vagas)
@@ -24,5 +24,11 @@ export async function consultarmes() {
   
     let [resultado] = await con.query(comando); 
     return resultado; 
-  }
+}
+
+export default async function consultarCandidatos() {
+  const comando = `select*from formularios`
+  let [resultado] = await con.query(comando)
+  return resultado
+}
   
