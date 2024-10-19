@@ -123,3 +123,14 @@ export async function consultardesc() {
 
     return info
 }
+
+export async function adicionandoCandidato(idCandidato, id) {
+    const comando = `
+    UPDATE vagas
+    SET id_formulario = ?
+    WHERE id = ?`
+    
+    let [resposta] = await con.query(comando, [idCandidato, id])
+    let info = resposta
+    return info
+}
