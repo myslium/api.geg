@@ -99,27 +99,8 @@ export async function consultarId(id) {
     return info;
 }
 
-export async function consultarmes() {
-    const comando = `
-      SELECT MONTH(data_criacao) as mes, COUNT(*) as quantidade 
-      FROM vagas 
-      GROUP BY mes
-    `;
-  
-    let [resultado] = await con.query(comando); 
-    return resultado; 
-  }
+
   
 
 
-export async function consultardesc() {
 
-    const comando = `SELECT  descricao FROM vagas
-
-    `
-
-    let [resultado] = await con.query(comando);
-    let info = resultado[0];
-
-    return info
-}
