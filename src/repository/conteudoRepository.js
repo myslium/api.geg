@@ -45,7 +45,7 @@ export async function consultarNota() {
     return info
 }
 
-export async function consultarNotaPorId() {
+export async function consultarNotaPorId(id) {
     
     const comando = `
         select*from conteudos where id = ?
