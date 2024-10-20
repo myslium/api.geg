@@ -82,7 +82,7 @@ export async function consultarTodasVagas() {
 
     let resultado = await con.query(comando);
     
-    return resultado[0][0]; 
+    return resultado[0]; 
 }
 
 

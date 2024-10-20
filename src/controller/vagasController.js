@@ -87,7 +87,7 @@ endpoints.put('/vagas/:id', async (req, resp) => {
     }
   });
 
-  endpoints.get('/vagas/:cargo', async (req, resp) => {
+  endpoints.get('/vagas/cargo/:cargo', async (req, resp) => {
     try {
         const cargo = req.params.cargo;
         let  vagas = await consultarVagasPorCargo(cargo);
