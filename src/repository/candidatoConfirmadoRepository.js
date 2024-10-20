@@ -18,7 +18,7 @@ export async function candidatosConfirmados(confirmado) {
 export default async function consultarCandidatoPorCpf(cpf) {
     const comando = `
     SELECT 
-      *
+      f.curriculo
     FROM candidato_confirmado c
     JOIN formularios f ON f.id = c.id_formulario
     WHERE f.cpf = ?
