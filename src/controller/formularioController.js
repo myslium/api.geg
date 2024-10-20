@@ -1,6 +1,6 @@
 import candidatoFormularioService from "../service/formularioService.js";
 import { Router } from "express";
-import { consultarCandidatos, consultarCandidatosPorID, atualizarFormulario, } from "../repository/formularioRepository.js";
+import { consultarCandidatos, consultarCandidatosPorID, atualizarFormulario,consultarCandidatoscurriPorID } from "../repository/formularioRepository.js";
 import multer from 'multer';
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -51,9 +51,7 @@ endpoints.put('/candidato/:id', async (req, resp) => {
         let id = req.params.id;
 
 
-        if (!['Pendente', 'Aprovado', 'Rejeitado'].includes(candidato.status)) {
-            throw new Error('Invalid status code');
-        }
+
 
         await atualizarFormulario(id, candidato);
 
@@ -61,6 +59,32 @@ endpoints.put('/candidato/:id', async (req, resp) => {
         
     } catch (err) {
         logErro(err);
+        resp.status(400).send(criarErro(err));
+    }
+});
+endpoints.get('/candidatocurr/:id', async (req, resp) => {
+    try {
+        let id = req.params.id;
+        let dado = await consultarCandidatoscurriPorID(id);
+
+        console.log("Dados retornados:", dado); 
+
+        if (dado && dado.curriculo) {
+            const extensao = dado.extensao || 'pdf'; 
+
+            const buffer = Buffer.from(dado.curriculo, 'base64'); 
+
+            resp.setHeader('Content-Type', extensao === 'pdf' ? 'application/pdf' :
+                                                extensao === 'doc' ? 'application/msword' :
+                                                extensao === 'docx' ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'application/octet-stream');
+
+            resp.setHeader('Content-Disposition', `attachment; filename=curriculo.${extensao}`);
+            resp.send(buffer);
+        } else {
+            resp.status(404).send({ error: 'Currículo não encontrado' });
+        }
+    } catch (err) {
+        console.error("Erro ao baixar currículo:", err);
         resp.status(400).send(criarErro(err));
     }
 });
