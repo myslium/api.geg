@@ -2,14 +2,14 @@ import con from "./connection.js";
 
 export async function candidatoFormulario(candidato) {
     const comando = `
-        INSERT INTO formularios (nome, cpf, id_vaga, email, curriculo, data_inscricao)
-        VALUES (?, ?, ?, ?, ?, NOW())
+        INSERT INTO formularios (nome, cpf, id_vaga, email, curriculo, data_inscricao, status)
+        VALUES (?, ?, ?, ?, ?, NOW(), 'Pendente')
     `;
 
     let resposta = await con.query(comando, [
         candidato.nome,
         candidato.cpf,
-        candidato.id_vaga, 
+        candidato.id_vaga,
         candidato.email,
         candidato.curriculo
     ]);
@@ -32,3 +32,25 @@ export async function consultarCandidatosPorID(id) {
     let [resultado] = await con.query(comando, [id]);
     return resultado[0];
 }
+
+
+export async function atualizarFormulario(id, candidato) {
+    const comando = `
+        UPDATE formularios
+        SET nome = ?, cpf = ?, id_vaga = ?, email = ?, curriculo = ?, status = ?
+        WHERE id = ?
+    `;
+
+    let [resposta] = await con.query(comando, [
+        candidato.nome,
+        candidato.cpf,
+        candidato.id_vaga,
+        candidato.email,
+        candidato.curriculo,
+        candidato.status,
+        id
+    ]);
+
+    return resposta.affectedRows;
+}
+

@@ -1,6 +1,6 @@
 import candidatoFormularioService from "../service/formularioService.js";
 import { Router } from "express";
-import { consultarCandidatos, consultarCandidatosPorID } from "../repository/formularioRepository.js";
+import { consultarCandidatos, consultarCandidatosPorID, atualizarFormulario, } from "../repository/formularioRepository.js";
 import multer from 'multer';
 
 const upload = multer({ storage: multer.memoryStorage() }); 
@@ -44,5 +44,20 @@ endpoints.get('/candidato/:id', async (req, resp) => {
         resp.status(400).send(criarErro(err));
     }
 });
+
+endpoints.put('/candidato/:id', async (req, resp) => {
+    try {
+        let candidato = req.body;
+        let id = req.params.id;
+        let dado = await atualizarFormulario(id,candidato);
+        resp.status(200).send(dado);
+    } catch (err) {
+        logErro(err);
+        resp.status(400).send(criarErro(err));
+    }
+});
+
+
+
 
 export default endpoints;
