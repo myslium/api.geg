@@ -80,9 +80,9 @@ export async function deletarVaga(id) {
 export async function consultarTodasVagas() {
     let comando = `SELECT * FROM vagas`;
 
-    let [resultado] = await con.query(comando);
+    let resultado = await con.query(comando);
     
-    return resultado; 
+    return resultado[0][0]; 
 }
 
 
@@ -109,7 +109,11 @@ export async function consultarId(id) {
     return info;
 }
 
-
+export async function consultarVagasPorCargo(cargo) {
+    const comando = `SELECT * FROM vagas WHERE cargo LIKE ?`;
+    let [resultado] = await con.query(comando, [`%${cargo}%`]);
+    return resultado;
+}
   
 
 
