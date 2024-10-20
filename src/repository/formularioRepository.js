@@ -37,20 +37,21 @@ export async function consultarCandidatosPorID(id) {
 export async function atualizarFormulario(id, candidato) {
     const comando = `
         UPDATE formularios
-        SET nome = ?, cpf = ?, id_vaga = ?, email = ?, curriculo = ?, status = ?
+        SET nome = ?, cpf = ?, id_vaga = ?, email = ?, status = ?
         WHERE id = ?
     `;
 
-    let [resposta] = await con.query(comando, [
+    let resposta = await con.query(comando, [
         candidato.nome,
         candidato.cpf,
         candidato.id_vaga,
         candidato.email,
-        candidato.curriculo,
         candidato.status,
         id
     ]);
 
-    return resposta.affectedRows;
+    let info = resposta[0];
+
+    return info.affectedRows;
 }
 
