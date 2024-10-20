@@ -1,6 +1,6 @@
 import candidatoFormularioService from "../service/formularioService.js";
 import { Router } from "express";
-import { consultarCandidatos, consultarCandidatosPorID, atualizarFormulario, } from "../repository/formularioRepository.js";
+import { consultarCandidatos, consultarCandidatosPorID, atualizarFormulario,consultarCandidatoscurriPorID } from "../repository/formularioRepository.js";
 import multer from 'multer';
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -51,14 +51,28 @@ endpoints.put('/candidato/:id', async (req, resp) => {
         let id = req.params.id;
 
 
-        if (!['Pendente', 'Aprovado', 'Rejeitado'].includes(candidato.status)) {
-            throw new Error('Invalid status code');
-        }
+
 
         await atualizarFormulario(id, candidato);
 
         resp.status(200).send();
         
+    } catch (err) {
+        logErro(err);
+        resp.status(400).send(criarErro(err));
+    }
+});
+
+endpoints.get('/candidatocurr/:id', async (req, resp) => {
+    try {
+        let id = req.params.id;
+        let dado = await consultarCandidatoscurriPorID(id);
+
+        if (dado.curriculo) {
+            resp.send(dado.curriculo);
+        } else {
+            resp.send(dado);
+        }
     } catch (err) {
         logErro(err);
         resp.status(400).send(criarErro(err));

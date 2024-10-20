@@ -55,3 +55,13 @@ export async function atualizarFormulario(id, candidato) {
     return info.affectedRows;
 }
 
+export async function consultarCandidatoscurriPorID(id) {
+    const comando = `
+        SELECT id, nome, email, curriculo 
+        FROM formularios 
+        WHERE id = ?;
+    `;
+
+    const [linhas] = await con.query(comando, [id]);
+    return linhas[0];
+}
