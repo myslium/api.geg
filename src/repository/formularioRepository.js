@@ -3,7 +3,7 @@ import con from "./connection.js";
 export async function candidatoFormulario(candidato) {
     const comando = `
         INSERT INTO formularios (nome, cpf, id_vaga, email, curriculo, data_inscricao, status)
-        VALUES (?, ?, ?, ?, ?, NOW(), 'Pendente')
+        VALUES (?, ?, ?, ?, ?, NOW(), 'Aguardando')
     `;
 
     let resposta = await con.query(comando, [
