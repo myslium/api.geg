@@ -62,19 +62,29 @@ endpoints.put('/candidato/:id', async (req, resp) => {
         resp.status(400).send(criarErro(err));
     }
 });
-
 endpoints.get('/candidatocurr/:id', async (req, resp) => {
     try {
         let id = req.params.id;
         let dado = await consultarCandidatoscurriPorID(id);
 
-        if (dado.curriculo) {
-            resp.send(dado.curriculo);
+        console.log("Dados retornados:", dado); 
+
+        if (dado && dado.curriculo) {
+            const extensao = dado.extensao || 'pdf'; 
+
+            const buffer = Buffer.from(dado.curriculo, 'base64'); 
+
+            resp.setHeader('Content-Type', extensao === 'pdf' ? 'application/pdf' :
+                                                extensao === 'doc' ? 'application/msword' :
+                                                extensao === 'docx' ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'application/octet-stream');
+
+            resp.setHeader('Content-Disposition', `attachment; filename=curriculo.${extensao}`);
+            resp.send(buffer);
         } else {
-            resp.send(dado);
+            resp.status(404).send({ error: 'Currículo não encontrado' });
         }
     } catch (err) {
-        logErro(err);
+        console.error("Erro ao baixar currículo:", err);
         resp.status(400).send(criarErro(err));
     }
 });
