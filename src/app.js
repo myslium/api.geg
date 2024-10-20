@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import Rotas from './rotas.js';
 
+
 const servidor = express();
 
 servidor.use(express.json());
