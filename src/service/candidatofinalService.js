@@ -1,26 +1,20 @@
 import { inserirCandidatoFinal, atualizarCandidatoFinal } from "../repository/candidatofinalRepository.js";
 
-export async function inserirCandidatoFinalService (id) {
-    
+export async function inserirCandidatoFinalService(vaga, emailEmpresa, descricao) {
+    const resultado = await inserirCandidatoFinal(vaga, emailEmpresa, descricao);
 
-    
-    const resultado = await inserirCandidatoFinal (id);
-
-   
     if (resultado === 0) {
-        throw new Error('Erro ao inserir ids');
+        throw new Error('Erro ao inserir candidato final');
     }
 
     return resultado; 
 }
 
-export async function atualizarCandidatoFinalService (id, final) {
-
+export async function atualizarCandidatoFinalService(id, final) {
     const resultado = await atualizarCandidatoFinal(id, final);
 
-    
     if (resultado === 0) {
-        throw new Error('Erro ao atualizar a candidato final');
+        throw new Error('Erro ao atualizar candidato final');
     }
 
     return resultado; 
