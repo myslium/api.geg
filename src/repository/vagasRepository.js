@@ -2,8 +2,8 @@ import con from './connection.js'
 
 export async function consultarVagas(vaga) {
 
-    let comando = `INSERT INTO vagas (nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, salario, beneficios, requisicoes, descricao, data_criacao, data_vencimento,
-        qtd_vagas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate(), ? , ?)`;
+    let comando = `INSERT INTO vagas (nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, salario, beneficios, requisicoes, descricao, data_criacao, data_vencimento,aprovado,
+        qtd_vagas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate(), ? ,não ,?)`;
 
     let [resultado] = await con.query(comando, [
         vaga.nome_empresa,
@@ -41,6 +41,7 @@ export async function atualizarVaga(vaga, id ) {
         requisicoes = ?, 
         descricao = ?,
         data_vencimento = ?,
+        aprovado = ?,
         qtd_vagas = ?
     WHERE id = ?`;
 
@@ -57,6 +58,7 @@ export async function atualizarVaga(vaga, id ) {
         vaga.requisicoes,
         vaga.descricao,
         vaga.vencimento,
+        vaga.aprovado,
         vaga.quantidade,
         id
     ]);
@@ -110,7 +112,7 @@ export async function consultarId(id) {
 }
 
 export async function consultarVagasPorCargo(cargo) {
-    const comando = `SELECT * FROM vagas WHERE cargo LIKE ?`;
+    const comando = `SELECT * FROM vagas WHERE cargo LIKE ? and aprovado = 'sim'`;
     let [resultado] = await con.query(comando, [`%${cargo}%`]);
     return resultado;
 }
@@ -121,6 +123,13 @@ export async function consultarVagasPorData(data) {
     return resultado;
 }
   
+export async function consultarVagasAprovadas() {
+    let comando = `SELECT * FROM vagas WHERE aprovado = 'sim'`;
+
+    let [resultado] = await con.query(comando);
+    
+    return resultado;
+}
 
 
 

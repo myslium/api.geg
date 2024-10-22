@@ -1,5 +1,5 @@
 import { consultarVagaservice, atualizarVagaservice, deletarVagaservice} from "../service/vagasService.js";
-import {consultarTodasVagas, consultarId,  consultarTodasdesc,consultarVagasPorCargo, consultarVagasPorData } from "../repository/vagasRepository.js";
+import {consultarTodasVagas, consultarId,  consultarTodasdesc,consultarVagasPorCargo, consultarVagasPorData, consultarVagasAprovadas } from "../repository/vagasRepository.js";
 import { Router } from "express";
 
 
@@ -49,6 +49,21 @@ endpoints.get('/vagasd', async (req, resp) => {
         resp.status(400).send(criarErro(err))
     }
 });
+
+endpoints.get('/vagasa', async (req, resp) => {
+    try {
+      
+       let dados = await  consultarVagasAprovadas();
+
+        resp.status(200).send(dados);
+    } 
+    
+    catch (err) {
+        logErro(err)
+        resp.status(400).send(criarErro(err))
+    }
+});
+
 
 
 
