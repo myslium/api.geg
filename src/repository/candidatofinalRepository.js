@@ -31,3 +31,4 @@ export async function consultarmes() {
     let [resultado] = await con.query(comando); 
     return resultado; 
 }
+

@@ -65,3 +65,13 @@ export async function consultarCandidatoscurriPorID(id) {
     const [linhas] = await con.query(comando, [id]);
     return linhas[0];
 }
+
+
+export async function consultarCandidatosPorCPF(cpf) {
+    const comando = `
+        SELECT * FROM formularios
+        WHERE cpf = ?
+    `;
+    let [resultado] = await con.query(comando, [cpf]);
+    return resultado[0];
+}
