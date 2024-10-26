@@ -27,7 +27,7 @@ endpoints.post('/mandaremail', async (req, resp) => {
 
         const mailOptions = {
             from: 'G&G <geg.servicosrecursoshumanos@gmail.com>',
-            to: req.body.to,
+            to: req.body.emailEmpresa,
             subject: 'Bem-Vindo | Cadastro 2',
             html: `
                 <h1 style="Purple Heart:;font-size:20px"> Bem vindo a G&G </h1>
