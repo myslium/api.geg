@@ -17,13 +17,20 @@ export async function inserirReceita(receita) {
     return info.insertId;
 }
 
-
 export async function consultarReceitaPorid(id) {
     const comando = `
-SELECT *  FROM receita WHERE id_interesse = ?
-
+        SELECT 
+            r.*, 
+            i.empresa 
+        FROM 
+            receita r
+        JOIN 
+            interesse i ON r.id_interesse = i.id
+        WHERE 
+            r.id_interesse = ?
     `;
 
-    let [resultado] = await con.query(comando, [id]);
-    return resultado;
+    let resultado = await con.query(comando, [id]);
+    return resultado[0];
 }
+

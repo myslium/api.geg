@@ -24,7 +24,7 @@ endpoints.get("/receita/:id", async (req, resp) => {
     try {
         const id = req.params.id;
         const dados = await consultarReceitaPorid (id);
-        resp.status(200).json({ dados });
+        resp.status(200).json(dados );
     } catch (err) {
         logErro(err)
         resp.status(400).send(criarErro(err));
