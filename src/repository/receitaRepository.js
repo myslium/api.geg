@@ -17,6 +17,7 @@ export async function inserirReceita(receita) {
     return info.insertId;
 }
 
+
 export async function consultarReceitaPorid(id) {
     const comando = `
         SELECT 
