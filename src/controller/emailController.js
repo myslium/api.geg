@@ -31,7 +31,8 @@ endpoints.post('/mandaremail', async (req, resp) => {
             subject: 'Bem-Vindo | Cadastro 2',
             html: `
                 <h1 style="Purple Heart:;font-size:20px"> Bem vindo a G&G </h1>
-                <p>OIe Mariaaanaaa</p>
+                <h2>${req.body.vaga}</h2>
+                <p>${req.body.descricao}</p>
             `,
             attachments: [{
                 filename: 'curriculo.pdf',
