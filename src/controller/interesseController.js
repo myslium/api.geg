@@ -4,6 +4,7 @@ import { inserirInteresse } from "../repository/interesseRepository.js";
 const endpoints = Router();
 
 
+
 endpoints.post("/interesse", async (req, resp) => {
     try {
         const empresa  = req.body;
