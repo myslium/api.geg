@@ -90,30 +90,36 @@ endpoints.get('/candidatocurr/:id', async (req, resp) => {
 });
 endpoints.get('/candidatocurrc/:cpf', async (req, resp) => {
     try {
-        let cpf = req.params.cpf;
-        let dado = await  consultarCandidatosPorCPF(cpf);
+        const cpf = req.params.cpf;
+        const dado = await consultarCandidatosPorCPF(cpf);
 
         console.log("Dados retornados:", dado); 
 
         if (dado && dado.curriculo) {
-            const extensao = dado.extensao || 'pdf'; 
+            const extensao = dado.extensao || 'pdf';
 
-            const buffer = Buffer.from(dado.curriculo, 'base64'); 
+            const buffer = Buffer.from(dado.curriculo, 'base64');
+            console.log("Tamanho do buffer:", buffer.length); 
 
-            resp.setHeader('Content-Type', extensao === 'pdf' ? 'application/pdf' :
-                                                extensao === 'doc' ? 'application/msword' :
-                                                extensao === 'docx' ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'application/octet-stream');
+            resp.setHeader('Content-Type', 
+                extensao === 'pdf' ? 'application/pdf' :
+                extensao === 'doc' ? 'application/msword' :
+                extensao === 'docx' ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 
+                'application/octet-stream'
+            );
 
             resp.setHeader('Content-Disposition', `attachment; filename=curriculo.${extensao}`);
             resp.send(buffer);
         } else {
+            console.error("Currículo não encontrado para o CPF:", cpf);
             resp.status(404).send({ error: 'Currículo não encontrado' });
         }
     } catch (err) {
         console.error("Erro ao baixar currículo:", err);
-        resp.status(400).send(criarErro(err));
+        resp.status(500).send({ error: 'Erro ao processar o pedido' });
     }
 });
+
 
 
 endpoints.get('/candidatoCPF/:cpf', async (req, resp) => {
