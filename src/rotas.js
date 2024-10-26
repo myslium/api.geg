@@ -3,7 +3,6 @@ import vagasController from '../src/controller/vagasController.js'
 import emailController from '../src/controller/emailController.js'
 import receitaController from '../src/controller/receitaController.js'
 import loginController from '../src/controller/loginController.js'
-import interesseController from "../src/controller/interesseController.js";
 import formularioController from '../src/controller/formularioController.js'
 import conteudoController from '../src/controller/conteudoController.js'
 import interesseController from '../src/controller/interesseController.js'

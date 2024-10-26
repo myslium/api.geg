@@ -19,11 +19,10 @@ endpoints.post("/receita", async (req, resp) => {
 
 
 
-
 endpoints.get("/receita/:id", async (req, resp) => {
     try {
         const id = req.params.id;
-        const dados = await consultarReceitaPorid (id);
+        const dados = await consultarReceitaPorid(id);
         resp.status(200).json(dados );
     } catch (err) {
         logErro(err)
