@@ -19,14 +19,14 @@ endpoints.post('/mandaremail', async (req, resp) => {
             service: 'gmail',
             auth: {
                 user: 'geg.servicosrecursoshumanos@gmail.com',
-                pass: 'iklp fxeu rqqq ja77 ozbt iw4b ga7c vc3i'
+                pass: 'e t s gr x v o o h c z r x i m'
             }
         });
 
 
 
         const mailOptions = {
-            from: 'G&G <ra52547559897@acaonsfatima.org.br>',
+            from: 'G&G <geg.servicosrecursoshumanos@gmail.com>',
             to: req.body.to,
             subject: 'Bem-Vindo | Cadastro 2',
             html: `
