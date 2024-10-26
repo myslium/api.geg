@@ -7,6 +7,7 @@ import formularioController from '../src/controller/formularioController.js'
 import conteudoController from '../src/controller/conteudoController.js'
 import interesseController from '../src/controller/interesseController.js'
 
+
 export default function Rotas(servidor) {
 
 

@@ -18,20 +18,20 @@ endpoints.post('/mandaremail', async (req, resp) => {
         let transporter = mailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'gentegestaoservicos@gmail.com',
-                pass: ''
+                user: 'geg.servicosrecursoshumanos@gmail.com',
+                pass: 'e t s gr x v o o h c z r x i m'
             }
         });
 
 
 
         const mailOptions = {
-            from: 'G&G <ra52547559897@acaonsfatima.org.br>',
+            from: 'G&G <geg.servicosrecursoshumanos@gmail.com>',
             to: req.body.to,
             subject: 'Bem-Vindo | Cadastro 2',
             html: `
-                <h1 style="color:blue;font-size:50px"> Bem vindo a G&G </h1>
-                <p>OIe Mariaaa</p>
+                <h1 style="Purple Heart:;font-size:20px"> Bem vindo a G&G </h1>
+                <p>OIe Mariaaanaaa</p>
             `,
             attachments: [{
                 filename: 'curriculo.pdf',
