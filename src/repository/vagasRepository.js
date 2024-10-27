@@ -3,7 +3,7 @@ import con from './connection.js'
 export async function consultarVagas(vaga) {
 
     let comando = `INSERT INTO vagas (nome_empresa, contato_empresa, cnpj, cargo, tipo_contrato, localizacao, modelo_trabalho, salario, beneficios, requisicoes, descricao, data_criacao, data_vencimento,aprovado,
-        qtd_vagas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate(), ? ,não ,?)`;
+        qtd_vagas) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sysdate(), ? ,? ,?)`;
 
     let [resultado] = await con.query(comando, [
         vaga.nome_empresa,
@@ -18,6 +18,7 @@ export async function consultarVagas(vaga) {
         vaga.requisicoes,
         vaga.descricao,
         vaga.vencimento,
+        vaga.aprovado,
         vaga.quantidade
     ]);
 
