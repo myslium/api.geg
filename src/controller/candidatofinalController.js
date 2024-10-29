@@ -21,7 +21,7 @@ endpoints.post("/candidatofinal", async (req, resp) => {
 endpoints.get("/candidatofinal", async (req, resp) => { 
     try {
         const dados = await consultarCandidatosFinais();
-        resp.status(200).json({ dados });
+        resp.status(200).json( dados );
     } catch (err) {
         logErro(err);
         resp.status(400).send(criarErro(err));
