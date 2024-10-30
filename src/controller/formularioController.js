@@ -1,11 +1,17 @@
 import candidatoFormularioService from "../service/formularioService.js";
 import { Router } from "express";
-import { consultarCandidatos, consultarCandidatosPorID, atualizarFormulario,consultarCandidatoscurriPorID, consultarCandidatosPorCPF } from "../repository/formularioRepository.js";
+import {
+    consultarCandidatos,
+    consultarCandidatosPorID,
+    atualizarFormulario,
+    consultarCandidatoscurriPorID,
+    consultarCandidatosPorCPF,
+
+} from "../repository/formularioRepository.js";
 import multer from 'multer';
 
 const upload = multer({ storage: multer.memoryStorage() });
 const endpoints = Router();
-
 
 endpoints.post('/candidatoNovo', upload.single('curriculo'), async (req, resp) => {
     try {
@@ -18,11 +24,14 @@ endpoints.post('/candidatoNovo', upload.single('curriculo'), async (req, resp) =
             novoID: resposta
         });
     } catch (err) {
-        logErro(err);
-        resp.status(400).send(criarErro(err));
+        if (err.message.includes("Candidato já se inscreveu nesta vaga.")) {
+            resp.status(409).send({ error: err.message });
+        } else {
+            logErro(err);
+            resp.status(400).send(criarErro(err));
+        }
     }
 });
-
 
 endpoints.get('/candidatoNovo', async (req, resp) => {
     try {
@@ -50,33 +59,30 @@ endpoints.put('/candidato/:id', async (req, resp) => {
         let candidato = req.body;
         let id = req.params.id;
 
-
-
-
         await atualizarFormulario(id, candidato);
 
         resp.status(200).send();
-        
     } catch (err) {
         logErro(err);
         resp.status(400).send(criarErro(err));
     }
 });
+
 endpoints.get('/candidatocurr/:id', async (req, resp) => {
     try {
         let id = req.params.id;
         let dado = await consultarCandidatoscurriPorID(id);
 
-        console.log("Dados retornados:", dado); 
+        console.log("Dados retornados:", dado);
 
         if (dado && dado.curriculo) {
-            const extensao = dado.extensao || 'pdf'; 
+            const extensao = dado.extensao || 'pdf';
 
-            const buffer = Buffer.from(dado.curriculo, 'base64'); 
+            const buffer = Buffer.from(dado.curriculo, 'base64');
 
             resp.setHeader('Content-Type', extensao === 'pdf' ? 'application/pdf' :
-                                                extensao === 'doc' ? 'application/msword' :
-                                                extensao === 'docx' ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'application/octet-stream');
+                extensao === 'doc' ? 'application/msword' :
+                extensao === 'docx' ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'application/octet-stream');
 
             resp.setHeader('Content-Disposition', `attachment; filename=curriculo.${extensao}`);
             resp.send(buffer);
@@ -88,23 +94,24 @@ endpoints.get('/candidatocurr/:id', async (req, resp) => {
         resp.status(400).send(criarErro(err));
     }
 });
+
 endpoints.get('/candidatocurrc/:cpf', async (req, resp) => {
     try {
         const cpf = req.params.cpf;
         const dado = await consultarCandidatosPorCPF(cpf);
 
-        console.log("Dados retornados:", dado); 
+        console.log("Dados retornados:", dado);
 
         if (dado && dado.curriculo) {
             const extensao = dado.extensao || 'pdf';
 
             const buffer = Buffer.from(dado.curriculo, 'base64');
-            console.log("Tamanho do buffer:", buffer.length); 
+            console.log("Tamanho do buffer:", buffer.length);
 
-            resp.setHeader('Content-Type', 
+            resp.setHeader('Content-Type',
                 extensao === 'pdf' ? 'application/pdf' :
                 extensao === 'doc' ? 'application/msword' :
-                extensao === 'docx' ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 
+                extensao === 'docx' ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' :
                 'application/octet-stream'
             );
 
@@ -122,6 +129,7 @@ endpoints.get('/candidatocurrc/:cpf', async (req, resp) => {
 
 
 
+
 endpoints.get('/candidatoCPF/:cpf', async (req, resp) => {
     try {
         let cpf = req.params.cpf;
@@ -132,8 +140,4 @@ endpoints.get('/candidatoCPF/:cpf', async (req, resp) => {
         resp.status(400).send(criarErro(err));
     }
 });
-
-
-
-
 export default endpoints;

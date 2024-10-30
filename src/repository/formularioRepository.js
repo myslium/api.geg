@@ -1,6 +1,19 @@
 import con from "./connection.js";
 
 export async function candidatoFormulario(candidato) {
+  
+    const verificarComando = `
+        SELECT COUNT(*) AS count 
+        FROM formularios 
+        WHERE cpf = ? AND id_vaga = ?
+    `;
+
+    let [verificacao] = await con.query(verificarComando, [candidato.cpf, candidato.id_vaga]);
+
+    if (verificacao[0].count > 0) {
+        throw new Error("Candidato já se inscreveu nesta vaga.");
+    }
+
     const comando = `
         INSERT INTO formularios (nome, cpf, id_vaga, email, curriculo, data_inscricao, status)
         VALUES (?, ?, ?, ?, ?, NOW(), 'Aguardando')
@@ -33,7 +46,6 @@ export async function consultarCandidatosPorID(id) {
     return resultado[0];
 }
 
-
 export async function atualizarFormulario(id, candidato) {
     const comando = `
         UPDATE formularios
@@ -65,7 +77,6 @@ export async function consultarCandidatoscurriPorID(id) {
     const [linhas] = await con.query(comando, [id]);
     return linhas[0];
 }
-
 
 export async function consultarCandidatosPorCPF(cpf) {
     const comando = `
