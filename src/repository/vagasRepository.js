@@ -119,7 +119,7 @@ export async function consultarVagasPorCargo(cargo) {
 }
 
 export async function consultarVagasPorData(data) {
-    const comando = `SELECT * FROM vagas WHERE data_vencimento LIKE ?`;
+    const comando = `SELECT * FROM vagas WHERE data_vencimento LIKE ? and aprovado = 'sim'`;
     let [resultado] = await con.query(comando, [`%${data}%`]);
     return resultado;
 }
