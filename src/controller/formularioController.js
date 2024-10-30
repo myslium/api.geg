@@ -6,6 +6,7 @@ import {
     atualizarFormulario,
     consultarCandidatoscurriPorID,
     consultarCandidatosPorCPF,
+    consultarjoin
 
 } from "../repository/formularioRepository.js";
 import multer from 'multer';
@@ -95,10 +96,10 @@ endpoints.get('/candidatocurr/:id', async (req, resp) => {
     }
 });
 
-endpoints.get('/candidatocurrc/:cpf', async (req, resp) => {
+endpoints.post('/candidatocurrc', async (req, resp) => {
     try {
-        const cpf = req.params.cpf;
-        const dado = await consultarCandidatosPorCPF(cpf);
+        const join = req.body ;
+        const dado = await consultarjoin(join);
 
         console.log("Dados retornados:", dado);
 
@@ -118,7 +119,7 @@ endpoints.get('/candidatocurrc/:cpf', async (req, resp) => {
             resp.setHeader('Content-Disposition', `attachment; filename=curriculo.${extensao}`);
             resp.send(buffer);
         } else {
-            console.error("Currículo não encontrado para o CPF:", cpf);
+            console.error("Currículo não encontrado para o CPF:", join.cpf);
             resp.status(404).send({ error: 'Currículo não encontrado' });
         }
     } catch (err) {
