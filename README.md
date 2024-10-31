@@ -1,31 +1,16 @@
+# Criando o Banco de Dados
 CREATE DATABASE geg;
 
-use geg;
+USE geg;
 
-drop database geg;
-
--- senha
+# Tabela de Administradores
 CREATE TABLE TB_ADMIN (
-  ID_ADMIN INT PRIMARY KEY auto_increment,
-  DS_USUARIO VARCHAR(200),
-  DS_SENHA VARCHAR(200)
+    ID_ADMIN INT PRIMARY KEY AUTO_INCREMENT,
+    DS_USUARIO VARCHAR(200),
+    DS_SENHA VARCHAR(200)
 );
 
-INSERT INTO TB_ADMIN (DS_USUARIO, DS_SENHA) VALUES ('admin', 'senha123');
-
-
--- cadastro
-CREATE TABLE formularios(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    cpf varchar(11) NOT NULL UNIQUE,
-    email varchar(200) NOT NULL UNIQUE,
-    curriculo blob NOT NULL,
-    data_inscricao DATETIME
-);
-
-INSERT INTO formularios (cpf, email, curriculo, data_inscricao)
-VALUES (?, ?, ?, ?);
-
+# Tabela de Vagas
 CREATE TABLE vagas (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome_empresa VARCHAR(100) NOT NULL,
@@ -39,37 +24,56 @@ CREATE TABLE vagas (
     beneficios TEXT,
     requisicoes TEXT,
     descricao TEXT,
-    data_criacao datetime
+    data_criacao DATETIME,
+    data_vencimento DATETIME,
+    aprovado ENUM('sim', 'não'),
+    qtd_vagas INT
+);
+# Tabela de Formulários
+CREATE TABLE formularios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(11) NOT NULL ,
+    id_vaga INT,
+    email VARCHAR(200) NOT NULL ,
+    curriculo LONGBLOB NOT NULL,
+    data_inscricao DATETIME,
+    status VARCHAR(100) NULL,
+    FOREIGN KEY (id_vaga) REFERENCES vagas(id)
 );
 
-
+# Tabela de Conteúdos
 CREATE TABLE conteudos (
     id INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(255) NOT NULL,
     corpo TEXT,
-    data_publicacao datetime
+    data_publicacao DATETIME
 );
 
-INSERT INTO conteudos (titulo, corpo, data_publicacao)
-VALUES (?, ?, ?);
-
-
-CREATE TABLE candidato_confirmado (
+# Tabela de Candidato Final
+CREATE TABLE candidato_final (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    id_formulario int,
-    nome VARCHAR(100) NOT NULL,
-    status VARCHAR(100) NOT NULL,
-    FOREIGN KEY (id_formulario) REFERENCES formularios(id)
+    vaga VARCHAR(100) NOT NULL,
+    email_empresa VARCHAR(200) NOT NULL,
+    descricao VARCHAR(255) NOT NULL,
+    data_postagem DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO candidato_confirmado (id_formulario, nome, status)
-VALUES (?, ?, ?);
+# Tabela interesse nos nossos serviços
 
+CREATE TABLE interesse 
+(id INT PRIMARY KEY AUTO_INCREMENT,
+empresa VARCHAR(100) NOT NULL,
+cnpj VARCHAR(18) NOT NULL);
 
-CREATE TABLE candidato (
-    id_candidato INT PRIMARY KEY AUTO_INCREMENT,
-    id_vaga INT,
-    FOREIGN KEY (id_vaga) REFERENCES vagas(id)
+# Tabela de recibo
+
+CREATE TABLE receita (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    vaga VARCHAR(100) NOT NULL, 
+    salario DECIMAL(10, 2) NOT NULL, 
+    qtd_vagas INT NOT NULL, 
+    id_interesse INT,
+    FOREIGN KEY (id_interesse) REFERENCES interesse(id)
 );
-bancodedadostcc.txt
-2 KB
+
