@@ -8,7 +8,9 @@ import {
     consultarCandidatosPorCPF,
     consultarjoin
 
+
 } from "../repository/formularioRepository.js";
+import { consultarJoin2 } from "../repository/formularioRepository.js";
 import multer from 'multer';
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -129,7 +131,16 @@ endpoints.post('/candidatocurrc', async (req, resp) => {
 });
 
 
-
+endpoints.get('/candidatojoinCPF/:cpf', async (req, resp) => {
+    try {
+        let cpf = req.params.cpf;
+        let dado = await consultarJoin2(cpf);
+        resp.send(dado);
+    } catch (err) {
+        logErro(err);
+        resp.status(400).send(criarErro(err));
+    }
+});
 
 endpoints.get('/candidatoCPF/:cpf', async (req, resp) => {
     try {

@@ -98,3 +98,15 @@ export async function consultarjoin(join) {
     let [resultado] = await con.query(comando, [join.cpf, join.contato_empresa, join.cargo]);
     return resultado[0];
 }
+
+export async function consultarJoin2(cpf) {
+    const comando = `
+    SELECT f.*,  v.cargo
+    FROM formularios f
+    JOIN vagas v ON f.id_vaga = v.id
+    WHERE f.cpf = ? ;
+    `;
+
+    const [resultado] = await con.query(comando, [cpf]);
+    return resultado;  
+}
