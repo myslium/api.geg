@@ -125,7 +125,11 @@ export async function consultarVagasPorData(data) {
 }
   
 export async function consultarVagasAprovadas() {
-    let comando = `SELECT * FROM vagas WHERE aprovado = 'sim'`;
+    let comando = `    SELECT v.id, v. *, v.nome_empresa, COUNT(f.id) AS total_aprovados
+        FROM vagas v
+        LEFT JOIN formularios f ON v.id = f.id_vaga AND f.status = 'aprovado'
+        WHERE v.aprovado = 'sim'
+        GROUP BY v.id, v.nome_empresa`;
 
     let [resultado] = await con.query(comando);
     
