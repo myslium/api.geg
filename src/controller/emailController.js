@@ -1,19 +1,19 @@
 import { Router } from "express";
-import mailer from 'nodemailer'
-import { consultarCandidatosPorCPF } from '../repository/formularioRepository.js'
-
-
+import mailer from 'nodemailer';
+import { consultarCandidatosPorCPF } from '../repository/formularioRepository.js';
 
 const endpoints = Router();
 
-
 endpoints.post('/mandaremail', async (req, resp) => {
-
     try {
-
         let dado = await consultarCandidatosPorCPF(req.body.cpf);
-        const buffer = Buffer.from(dado.curriculo, 'base64');
 
+        // Verifique se dado e curriculo estão disponíveis
+        if (!dado || !dado.curriculo) {
+            throw new Error('Currículo não encontrado ou inválido.');
+        }
+
+        const buffer = Buffer.from(dado.curriculo, 'base64');
 
         let transporter = mailer.createTransport({
             service: 'gmail',
@@ -22,8 +22,6 @@ endpoints.post('/mandaremail', async (req, resp) => {
                 pass: 'e t s gr x v o o h c z r x i m'
             }
         });
-
-
 
         const mailOptions = {
             from: 'G&G <geg.servicosrecursoshumanos@gmail.com>',
@@ -38,21 +36,15 @@ endpoints.post('/mandaremail', async (req, resp) => {
                 filename: 'curriculo.pdf',
                 content: buffer
             }]
-        }
+        };
 
-        
-        transporter.sendMail(mailOptions);
-        resp.send();
+        await transporter.sendMail(mailOptions);
+        resp.sendStatus(200); 
 
+    } catch (err) {
+        logErro(err);
+        resp.status(400).send(criarErro(err));
     }
-    catch (err) {
-        logErro(err)
-        resp.status(400).send(criarErro(err))
-    }
-
-})
-
-
-
+});
 
 export default endpoints;

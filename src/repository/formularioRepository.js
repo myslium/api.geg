@@ -4,7 +4,7 @@ export async function candidatoFormulario(candidato) {
   
     const verificarComando = `
         SELECT COUNT(*) AS count 
-        FROM formularios 
+        FROM formulario 
         WHERE cpf = ? AND id_vaga = ?
     `;
 
@@ -15,7 +15,7 @@ export async function candidatoFormulario(candidato) {
     }
 
     const comando = `
-        INSERT INTO formularios (nome, cpf, id_vaga, email, curriculo, data_inscricao, status)
+        INSERT INTO formulario (nome, cpf, id_vaga, email, curriculo, data_inscricao, status)
         VALUES (?, ?, ?, ?, ?, NOW(), 'Aguardando')
     `;
 
@@ -32,14 +32,14 @@ export async function candidatoFormulario(candidato) {
 }
 
 export async function consultarCandidatos() {
-    const comando = `SELECT * FROM formularios`;
+    const comando = `SELECT * FROM formulario`;
     let [resultado] = await con.query(comando);
     return resultado;
 }
 
 export async function consultarCandidatosPorID(id) {
     const comando = `
-        SELECT * FROM formularios
+        SELECT * FROM formulario
         WHERE id = ?
     `;
     let [resultado] = await con.query(comando, [id]);
@@ -48,7 +48,7 @@ export async function consultarCandidatosPorID(id) {
 
 export async function atualizarFormulario(id, candidato) {
     const comando = `
-        UPDATE formularios
+        UPDATE formulario
         SET nome = ?, cpf = ?, id_vaga = ?, email = ?, status = ?
         WHERE id = ?
     `;
@@ -70,7 +70,7 @@ export async function atualizarFormulario(id, candidato) {
 export async function consultarCandidatoscurriPorID(id) {
     const comando = `
         SELECT id, nome, email, curriculo 
-        FROM formularios 
+        FROM formulario
         WHERE id = ?;
     `;
 
@@ -80,17 +80,17 @@ export async function consultarCandidatoscurriPorID(id) {
 
 export async function consultarCandidatosPorCPF(cpf) {
     const comando = `
-        SELECT * FROM formularios
+        SELECT * FROM formulario
         WHERE cpf = ?
     `;
     let [resultado] = await con.query(comando, [cpf]);
-    return resultado;
+    return resultado[0];
 }
 
 export async function consultarjoin(join) {
     const comando = `
     SELECT f.*, v.contato_empresa, v.cargo
-    FROM formularios f
+    FROM formulario f
     JOIN vagas v ON f.id_vaga = v.id
     WHERE f.cpf = ? AND v.contato_empresa = ? AND v.cargo = ?;
     `;
@@ -102,7 +102,7 @@ export async function consultarjoin(join) {
 export async function consultarJoin2(cpf) {
     const comando = `
     SELECT f.*,  v.cargo
-    FROM formularios f
+    FROM formulario f
     JOIN vagas v ON f.id_vaga = v.id
     WHERE f.cpf = ? ;
     `;
