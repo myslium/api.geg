@@ -1,16 +1,14 @@
-# Criando o Banco de Dados
+
 CREATE DATABASE geg;
 
 USE geg;
 
-# Tabela de Administradores
 CREATE TABLE TB_ADMIN (
     ID_ADMIN INT PRIMARY KEY AUTO_INCREMENT,
     DS_USUARIO VARCHAR(200),
     DS_SENHA VARCHAR(200)
 );
 
-# Tabela de Vagas
 CREATE TABLE vagas (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome_empresa VARCHAR(100) NOT NULL,
@@ -29,7 +27,6 @@ CREATE TABLE vagas (
     aprovado ENUM('sim', 'não'),
     qtd_vagas INT
 );
-# Tabela de Formulários
 CREATE TABLE formularios (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
@@ -42,7 +39,6 @@ CREATE TABLE formularios (
     FOREIGN KEY (id_vaga) REFERENCES vagas(id)
 );
 
-# Tabela de Conteúdos
 CREATE TABLE conteudos (
     id INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(255) NOT NULL,
@@ -50,7 +46,6 @@ CREATE TABLE conteudos (
     data_publicacao DATETIME
 );
 
-# Tabela de Candidato Final
 CREATE TABLE candidato_final (
     id INT PRIMARY KEY AUTO_INCREMENT,
     vaga VARCHAR(100) NOT NULL,
@@ -59,14 +54,12 @@ CREATE TABLE candidato_final (
     data_postagem DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-# Tabela interesse nos nossos serviços
 
 CREATE TABLE interesse 
 (id INT PRIMARY KEY AUTO_INCREMENT,
 empresa VARCHAR(100) NOT NULL,
 cnpj VARCHAR(18) NOT NULL);
 
-# Tabela de recibo
 
 CREATE TABLE receita (
     id INT PRIMARY KEY AUTO_INCREMENT,
