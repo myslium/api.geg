@@ -27,7 +27,7 @@ CREATE TABLE vagas (
     aprovado ENUM('sim', 'não'),
     qtd_vagas INT
 );
-CREATE TABLE formularios (
+CREATE TABLE formulario (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     cpf VARCHAR(11) NOT NULL ,
