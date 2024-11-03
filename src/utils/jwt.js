@@ -3,8 +3,9 @@ import jwt from 'jsonwebtoken';
 const KEY = process.env.JWT_SECRET_KEY || 'fallbackKey';
 
 export function gerarTokenAdmin(userInfo) {
-  userInfo.role = 'admin';
-  return jwt.sign(userInfo, KEY, { expiresIn: '1h' }); 
+  const { senha, ...resto } = userInfo;
+  resto.role = 'admin';
+  return jwt.sign(resto, KEY, { expiresIn: '1h' }); 
 }
 
 export function autenticacaoAdmin(req, resp, next) {
