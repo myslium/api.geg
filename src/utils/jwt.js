@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
-const KEY = '===Gestão==='
+ const KEY = process.env.JWT_SECRET_KEY || 'fallbackKey';
+
 
 
 
