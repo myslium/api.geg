@@ -8,7 +8,6 @@ endpoints.post('/mandaremail', async (req, resp) => {
     try {
         let dado = await consultarCandidatosPorCPF(req.body.cpf);
 
-        // Verifique se dado e curriculo estão disponíveis
         if (!dado || !dado.curriculo) {
             throw new Error('Currículo não encontrado ou inválido.');
         }
