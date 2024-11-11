@@ -4,8 +4,7 @@ import con from './connection.js';
 
 export default async function consultarAdmin(usuario, senha) {
   
-    const senhaCriptografada = CryptoJS.SHA256(senha).toString(); 
-
+   
     let comando = `
           SELECT DS_USUARIO usuario,
                  DS_SENHA   senha
@@ -13,8 +12,11 @@ export default async function consultarAdmin(usuario, senha) {
            WHERE DS_USUARIO = ? 
              AND DS_SENHA   = ?;
     `;
+    let senhaCripto = CryptoJS.SHA256(senha).toString()
 
-    let resposta = await con.query(comando, [usuario, senhaCriptografada]); 
+
+    let resposta = await con.query(comando, [usuario, senhaCripto]); 
+    
     let linhas = resposta[0];
 
     return linhas[0]; 

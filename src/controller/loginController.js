@@ -5,7 +5,7 @@ const endpoints = Router();
 
 endpoints.post('/login/adm', async (req, resp) => {
     try {
-        const { usuario, senha } = req.body; 
+        const {usuario, senha} = req.body; 
 
         const usuarioValido = await consultarAdmin(usuario, senha); 
 
