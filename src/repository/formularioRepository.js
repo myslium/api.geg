@@ -94,7 +94,7 @@ export async function consultarjoin(join) {
     JOIN vagas v ON f.id_vaga = v.id
     WHERE f.cpf = ? AND v.contato_empresa = ? AND v.cargo = ?;
     `;
-
+    console.log(comando,[join.cpf, join.contato_empresa, join.cargo])
     let [resultado] = await con.query(comando, [join.cpf, join.contato_empresa, join.cargo]);
     return resultado[0];
 }
