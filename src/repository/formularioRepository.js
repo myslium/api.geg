@@ -84,7 +84,7 @@ export async function consultarCandidatosPorCPF(cpf) {
         WHERE cpf = ?
     `;
     let [resultado] = await con.query(comando, [cpf]);
-    return resultado;
+    return resultado[0];
 }
 
 export async function consultarjoin(join) {
